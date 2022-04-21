@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class GameStateController : MonoBehaviour
@@ -13,6 +14,8 @@ public class GameStateController : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private GameObject gameStateUI;
+    [SerializeField] private GameObject pauseUI;
+
     [SerializeField] private TextMeshProUGUI resultUI;
     [SerializeField] private TextMeshProUGUI currentNumberOfInfectedUI;
     [SerializeField] private TextMeshProUGUI numberOfInfectedForGameOverUI;
@@ -59,5 +62,19 @@ public class GameStateController : MonoBehaviour
     public void OnMainMenuPressed()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void OnContinuePressed()
+    {
+        Time.timeScale = 1;
+        pauseUI.SetActive(false);
+    }
+
+
+    public void OnPause(InputValue value)
+    {
+        Debug.Log("a");
+        Time.timeScale = 0;
+        pauseUI.SetActive(true);
     }
 }
