@@ -35,6 +35,11 @@ public class GameStateController : MonoBehaviour
         {
             UpdateGameStateUI(false);
         }
+        if(currentNumberOfInfected == 0)
+        {
+            UpdateGameStateUI(true);
+
+        }
     }
 
 
@@ -45,11 +50,11 @@ public class GameStateController : MonoBehaviour
 
         if (gameResult)
         {
-            resultUI.text = "There are too much infected\nYou Lose";
+           resultUI.text = "You destoryed all the infected\nYou Win";
         }
         else
-        {
-            resultUI.text = "You destoryed all the infected\nYou Win";
+        { 
+            resultUI.text = "There are too much infected\nYou Lose";
         }
 
     }

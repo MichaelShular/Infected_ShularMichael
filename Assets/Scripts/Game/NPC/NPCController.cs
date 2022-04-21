@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using UnityEngine.EventSystems;
 public enum NPCState
 {
     Waiting,
     Moving,
     Infecting
 }
-public class NPCController : MonoBehaviour
+public class NPCController : MonoBehaviour, IPointerClickHandler
 {
-
+    [Header("GameController")]
+    [SerializeField] private GameStateController gameStateController;
 
     [Header("AI properties") ]
     [SerializeField] private BoxCollider movementBoundsArea;
@@ -81,7 +82,17 @@ public class NPCController : MonoBehaviour
         
     }
 
-
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        if (isInfected)
+        {
+            
+            gameStateController.changeNumberOfInfected(-1);
+            
+        }
+     
+        Destroy(this.gameObject);
+    }
  
 
 }
