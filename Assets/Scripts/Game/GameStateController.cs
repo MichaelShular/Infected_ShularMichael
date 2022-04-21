@@ -62,6 +62,7 @@ public class GameStateController : MonoBehaviour
     public void changeNumberOfInfected(int amountToChangeBy)
     {
         currentNumberOfInfected += amountToChangeBy;
+        currentNumberOfInfectedUI.text = currentNumberOfInfected.ToString();
     }
 
     public void OnMainMenuPressed()
