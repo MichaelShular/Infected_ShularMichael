@@ -18,7 +18,7 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
     [SerializeField] private BoxCollider movementBoundsArea;
     [SerializeField] private NPCState currentState;
 
-    [SerializeField] private bool isInfected;
+    public bool isInfected;
 
     [SerializeField] private float minTimeBeforeMove;
     [SerializeField] private float maxTimeBeforeMove;
@@ -29,6 +29,9 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
     // Start is called before the first frame update
     void Start()
     {
+        gameStateController = GameObject.Find("GameController").GetComponent<GameStateController>();
+        movementBoundsArea = GameObject.Find("Floor").GetComponent<BoxCollider>();
+
         agent = GetComponent<NavMeshAgent>();
         randomizeNextLocation();
         currentState = NPCState.Moving;
@@ -90,7 +93,6 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
             gameStateController.changeNumberOfInfected(-1);
             
         }
-     
         Destroy(this.gameObject);
     }
  
