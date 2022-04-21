@@ -61,12 +61,17 @@ public class NPCTimerController : MonoBehaviour
 
         foreach (var NPC in infectedList)
         {
-            NPC.GetComponent<NPCController>().setTarget(NPCList[Random.Range(0, NPCList.Count)]);
+            GameObject tempNpc = NPCList[Random.Range(0, NPCList.Count)];
+            NPC.GetComponent<NPCController>().setTarget(tempNpc);
         }
-
+        StartCoroutine(InfectingCoolDown(numberOfSecBeforeNextWave));
     }
 
-
+    public void moveToInfectedList(GameObject NPC)
+    {
+        NPCList.Remove(NPC);
+        infectedList.Add(NPC);
+    }
 
 
 }

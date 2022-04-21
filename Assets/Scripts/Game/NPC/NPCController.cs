@@ -14,7 +14,7 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
     [Header("GameController")]
     [SerializeField] private GameStateController gameStateController;
 
-    [Header("AI properties") ]
+    [Header("AI properties")]
     [SerializeField] private BoxCollider movementBoundsArea;
     [SerializeField] private NPCState currentState;
 
@@ -48,6 +48,8 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
 
     public void AIStateController()
     {
+
+
         switch (currentState)
         {
             case NPCState.Waiting:
@@ -58,10 +60,16 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
                 checkDistenceBetween(transform.position, nextLocation);
                 agent.SetDestination(nextLocation);
 
+                if (isInfected)
+                {
+                    gameObject.GetComponent<Renderer>().material.color = Color.green;
+
+                }
+
                 break;
             case NPCState.MoveToInfectingTarget:
 
-                gameObject.GetComponent<Renderer>().material.color = Color.red; 
+                gameObject.GetComponent<Renderer>().material.color = Color.red;
 
                 checkDistenceBetween(transform.position, targetToInfect.transform.position);
                 agent.SetDestination(targetToInfect.transform.position);
@@ -86,16 +94,30 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
 
     private void checkDistenceBetween(Vector3 a, Vector3 b)
     {
-        if(Vector3.Distance(a, b) < 1)
+        if (isInfected && currentState == NPCState.MoveToInfectingTarget)
+        {
+            if (Vector3.Distance(a, b) < 2)
+            {
+                //Play Animation
+
+                targetToInfect.GetComponent<NPCController>().settingToInfected();
+                currentState = NPCState.Waiting;
+            }
+            return;
+        }
+
+        if (Vector3.Distance(a, b) < 1)
         {
             currentState = NPCState.Waiting;
             StartCoroutine(waitBeforeMoving());
         }
-        
+
     }
 
     public void setTarget(GameObject target)
     {
+        if (currentState == NPCState.MoveToInfectingTarget) return;
+
         currentState = NPCState.MoveToInfectingTarget;
         targetToInfect = target;
     }
@@ -105,12 +127,19 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
     {
         if (isInfected)
         {
-            
+
             gameStateController.changeNumberOfInfected(-1);
-            
+
         }
         Destroy(this.gameObject);
     }
- 
+
+    public void settingToInfected()
+    {
+        isInfected = true;
+        GameObject.Find("GameController").GetComponent<NPCTimerController>().moveToInfectedList(this.gameObject);
+        gameObject.GetComponent<Renderer>().material.color = Color.blue;
+
+    }
 
 }
