@@ -7,7 +7,7 @@ public enum NPCState
 {
     Waiting,
     Moving,
-    Infecting
+    MoveToInfectingTarget
 }
 public class NPCController : MonoBehaviour, IPointerClickHandler
 {
@@ -24,7 +24,7 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
     [SerializeField] private float maxTimeBeforeMove;
     private NavMeshAgent agent;
     private Vector3 nextLocation;
-
+    private GameObject targetToInfect;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +36,8 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         randomizeNextLocation();
         currentState = NPCState.Moving;
 
+        //randomizing start position
+        transform.position = new Vector3(Random.Range(movementBoundsArea.bounds.min.x, movementBoundsArea.bounds.max.x), 1, Random.Range(movementBoundsArea.bounds.min.z, movementBoundsArea.bounds.max.z));
     }
 
     // Update is called once per frame
@@ -53,11 +55,18 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
                 break;
             case NPCState.Moving:
 
-                checkDistenceBetween();
+                checkDistenceBetween(transform.position, nextLocation);
                 agent.SetDestination(nextLocation);
 
                 break;
-            case NPCState.Infecting:
+            case NPCState.MoveToInfectingTarget:
+
+                gameObject.GetComponent<Renderer>().material.color = Color.red; 
+
+                checkDistenceBetween(transform.position, targetToInfect.transform.position);
+                agent.SetDestination(targetToInfect.transform.position);
+
+
                 break;
             default:
                 break;
@@ -75,15 +84,22 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         nextLocation = new Vector3(Random.Range(movementBoundsArea.bounds.min.x, movementBoundsArea.bounds.max.x), 1, Random.Range(movementBoundsArea.bounds.min.z, movementBoundsArea.bounds.max.z));
     }
 
-    private void checkDistenceBetween()
+    private void checkDistenceBetween(Vector3 a, Vector3 b)
     {
-        if(Vector3.Distance(transform.position, nextLocation) < 1)
+        if(Vector3.Distance(a, b) < 1)
         {
             currentState = NPCState.Waiting;
             StartCoroutine(waitBeforeMoving());
         }
         
     }
+
+    public void setTarget(GameObject target)
+    {
+        currentState = NPCState.MoveToInfectingTarget;
+        targetToInfect = target;
+    }
+
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {

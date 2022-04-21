@@ -59,7 +59,10 @@ public class NPCTimerController : MonoBehaviour
             yield return null;
         }
 
-
+        foreach (var NPC in infectedList)
+        {
+            NPC.GetComponent<NPCController>().setTarget(NPCList[Random.Range(0, NPCList.Count)]);
+        }
 
     }
 
