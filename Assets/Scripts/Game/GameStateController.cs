@@ -9,16 +9,23 @@ using TMPro;
 public class GameStateController : MonoBehaviour
 {
     [Header("Game Variables")]
-    [SerializeField] private int currentNumberOfInfected;
-    [SerializeField] private int numberOfInfectedForGameOver;
+    [SerializeField] 
+    private int currentNumberOfInfected;
+    [SerializeField] 
+    public int numberOfUninfected;
 
     [Header("UI Elements")]
-    [SerializeField] private GameObject gameStateUI;
-    [SerializeField] private GameObject pauseUI;
+    [SerializeField] 
+    private GameObject gameStateUI;
+    [SerializeField] 
+    private GameObject pauseUI;
 
-    [SerializeField] private TextMeshProUGUI resultUI;
-    [SerializeField] private TextMeshProUGUI currentNumberOfInfectedUI;
-    [SerializeField] private TextMeshProUGUI numberOfInfectedForGameOverUI;
+    [SerializeField] 
+    private TextMeshProUGUI resultUI;
+    [SerializeField] 
+    private TextMeshProUGUI currentNumberOfInfectedUI;
+    [SerializeField]
+    private TextMeshProUGUI numberOfInfectedForGameOverUI;
 
 
 
@@ -31,7 +38,7 @@ public class GameStateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentNumberOfInfected >= numberOfInfectedForGameOver)
+        if (numberOfUninfected == 0)
         {
             UpdateGameStateUI(false);
         }
@@ -54,7 +61,7 @@ public class GameStateController : MonoBehaviour
         }
         else
         { 
-            resultUI.text = "There are too much infected\nYou Lose";
+            resultUI.text = "You Lose\nEveryone is infected";
         }
 
     }
@@ -62,6 +69,7 @@ public class GameStateController : MonoBehaviour
     public void changeNumberOfInfected(int amountToChangeBy)
     {
         currentNumberOfInfected += amountToChangeBy;
+        
         currentNumberOfInfectedUI.text = currentNumberOfInfected.ToString();
     }
 

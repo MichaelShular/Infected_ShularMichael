@@ -18,7 +18,8 @@ public class NPCTimerController : MonoBehaviour
     private List<GameObject> infectedList;
     [SerializeField]
     private TextMeshProUGUI TimerUI;
-
+    [SerializeField] 
+    private TextMeshProUGUI numberOfInfectedForGameOverUI;
 
 
     // Start is called before the first frame update
@@ -36,6 +37,10 @@ public class NPCTimerController : MonoBehaviour
         GameObject tempInfected = Instantiate(gameObjectNPC);
         tempInfected.GetComponent<NPCController>().isInfected = true;
         infectedList.Add(tempInfected);
+
+        GetComponent<GameStateController>().numberOfUninfected = NPCList.Count;
+        numberOfInfectedForGameOverUI.text = NPCList.Count.ToString();
+
 
         StartCoroutine(InfectingCoolDown(numberOfSecBeforeNextWave));
     }
@@ -72,6 +77,8 @@ public class NPCTimerController : MonoBehaviour
     {
         NPCList.Remove(NPC);
         infectedList.Add(NPC);
+        numberOfInfectedForGameOverUI.text = NPCList.Count.ToString();
+        GetComponent<GameStateController>().numberOfUninfected = NPCList.Count;
     }
 
     public void RemoveFromList(GameObject NPC)

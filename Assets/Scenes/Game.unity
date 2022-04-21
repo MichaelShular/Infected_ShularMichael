@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNumberOfInfected: 1
-  numberOfInfectedForGameOver: 5
+  numberOfUninfected: 0
   gameStateUI: {fileID: 1000173226}
   pauseUI: {fileID: 338103123}
   resultUI: {fileID: 716444055}
@@ -355,6 +355,7 @@ MonoBehaviour:
   numberOfSecBeforeNextWave: 10
   gameObjectNPC: {fileID: 5106451830453444592, guid: 323cf88c23176174db6431e1e4ec5d64, type: 3}
   TimerUI: {fileID: 1526291116}
+  numberOfInfectedForGameOverUI: {fileID: 3137781}
 --- !u!1 &224478497
 GameObject:
   m_ObjectHideFlags: 0
