@@ -9,7 +9,8 @@ public enum NPCState
     Moving,
     MoveToInfectingTarget,
     DeadState,
-    Attacking
+    Attacking,
+    GettingAttacked
 }
 public class NPCController : MonoBehaviour, IPointerClickHandler
 {
@@ -27,6 +28,10 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
     private NavMeshAgent agent;
     private Vector3 nextLocation;
     private GameObject targetToInfect;
+    private IEnumerator waitForMovingTask;
+    private IEnumerator gettingAttackTask;
+    private IEnumerator AttackingTask;
+
 
     [Header("AI Animation")]
     public Animator AIAnimator;
@@ -48,6 +53,9 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         transform.position = new Vector3(Random.Range(movementBoundsArea.bounds.min.x, movementBoundsArea.bounds.max.x), 1, Random.Range(movementBoundsArea.bounds.min.z, movementBoundsArea.bounds.max.z));
         AIAnimator.SetInteger("AnimationState", 1);
 
+
+
+
     }
 
     // Update is called once per frame
@@ -64,11 +72,11 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         {
             case NPCState.Waiting:
 
-               
+
 
                 break;
             case NPCState.Moving:
-                
+
 
                 checkDistenceBetween(transform.position, nextLocation);
                 agent.SetDestination(nextLocation);
@@ -94,6 +102,9 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
 
                 break;
             case NPCState.Attacking:
+
+                break;
+            case NPCState.GettingAttacked:
 
                 break;
             default:
@@ -122,9 +133,10 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
                 //Play Animation
                 currentState = NPCState.Attacking;
                 AIAnimator.SetInteger("AnimationState", 2);
+                targetToInfect.GetComponent<NPCController>().startGettingAttacked();
 
-                StartCoroutine(waitForAnimationToPlay(2.6f));
-                
+                StartCoroutine(waitForAttackToPlay(2.6f));
+
             }
             return;
         }
@@ -132,7 +144,8 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         if (Vector3.Distance(a, b) < 1)
         {
             currentState = NPCState.Waiting;
-            StartCoroutine(waitBeforeMoving());
+            waitForMovingTask = waitBeforeMoving();
+            StartCoroutine(waitForMovingTask);
             AIAnimator.SetInteger("AnimationState", 0);
 
         }
@@ -141,7 +154,12 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
 
     public void setTarget(GameObject target)
     {
-        if (currentState == NPCState.MoveToInfectingTarget) return;
+        if (currentState == NPCState.MoveToInfectingTarget || currentState == NPCState.Attacking || currentState == NPCState.GettingAttacked) return;
+        if (waitForMovingTask != null)
+        {
+            StopCoroutine(waitForMovingTask);
+        }
+
 
         currentState = NPCState.MoveToInfectingTarget;
         targetToInfect = target;
@@ -174,14 +192,37 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         gameStateController.changeNumberOfInfected(1);
     }
 
-    IEnumerator waitForAnimationToPlay(float timeToPlay)
+    public void startGettingAttacked()
+    {
+        if (waitForMovingTask != null)
+        {
+            StopCoroutine(waitForMovingTask);
+        }
+        currentState = NPCState.GettingAttacked;
+        AIAnimator.SetInteger("AnimationState", 4);
+        agent.SetDestination(transform.position);
+
+        StartCoroutine(waitForGettingAttackedToPlay(2.6f));
+    }
+
+    IEnumerator waitForAttackToPlay(float timeToPlay)
     {
         yield return new WaitForSeconds(timeToPlay);
 
         targetToInfect.GetComponent<NPCController>().settingToInfected();
         currentState = NPCState.Moving;
         AIAnimator.SetInteger("AnimationState", 1);
+    }
 
+    IEnumerator waitForGettingAttackedToPlay(float timeToPlay)
+    {
+
+
+        yield return new WaitForSeconds(timeToPlay);
+
+
+        currentState = NPCState.Moving;
+        AIAnimator.SetInteger("AnimationState", 1);
     }
 
 }
