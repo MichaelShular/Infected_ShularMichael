@@ -31,7 +31,7 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
     private IEnumerator waitForMovingTask;
     private IEnumerator gettingAttackTask;
     private IEnumerator AttackingTask;
-
+    private AudioSource hurtEffect;
 
     [Header("AI Animation")]
     public Animator AIAnimator;
@@ -53,7 +53,7 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         transform.position = new Vector3(Random.Range(movementBoundsArea.bounds.min.x, movementBoundsArea.bounds.max.x), 1, Random.Range(movementBoundsArea.bounds.min.z, movementBoundsArea.bounds.max.z));
         AIAnimator.SetInteger("AnimationState", 1);
 
-
+        hurtEffect = GetComponent<AudioSource>();
 
 
     }
@@ -198,6 +198,7 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         {
             StopCoroutine(waitForMovingTask);
         }
+        hurtEffect.Play();
         currentState = NPCState.GettingAttacked;
         AIAnimator.SetInteger("AnimationState", 4);
         agent.SetDestination(transform.position);
