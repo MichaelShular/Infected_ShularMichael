@@ -7,6 +7,8 @@ public class MainMenuUIController : MonoBehaviour
 {
     [SerializeField]
     public GameObject instructionUI;
+    [SerializeField]
+    public GameObject creditsUI;
 
     public void OnStartGamePressed()
     {
@@ -23,5 +25,10 @@ public class MainMenuUIController : MonoBehaviour
     public void ToggleInsturtcions()
     {
         instructionUI.SetActive(!instructionUI.activeSelf);
+    }
+
+    public void ToggleCredits()
+    {
+        creditsUI.SetActive(!creditsUI.activeSelf);
     }
 }
