@@ -174,7 +174,11 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
             gameStateController.changeNumberOfInfected(-1);
 
         }
+        else
+        {
 
+        }
+        agent.SetDestination(transform.position);
         currentState = NPCState.DeadState;
         GameObject.Find("GameController").GetComponent<NPCTimerController>().RemoveFromList(this.gameObject);
 
@@ -186,10 +190,16 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
 
     public void settingToInfected()
     {
+        if (isInfected) return;
+        
         isInfected = true;
         GameObject.Find("GameController").GetComponent<NPCTimerController>().moveToInfectedList(this.gameObject);
         gameObject.GetComponent<Renderer>().material.color = Color.blue;
-        gameStateController.changeNumberOfInfected(1);
+
+        
+            gameStateController.changeNumberOfInfected(1);
+        
+
     }
 
     public void startGettingAttacked()
