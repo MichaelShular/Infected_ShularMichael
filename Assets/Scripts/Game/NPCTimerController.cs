@@ -84,5 +84,6 @@ public class NPCTimerController : MonoBehaviour
     public void RemoveFromList(GameObject NPC)
     {
         NPCList.Remove(NPC);
+        infectedList.Remove(NPC);
     }
 }
