@@ -15,16 +15,21 @@ public enum NPCState
 public class NPCController : MonoBehaviour, IPointerClickHandler
 {
     [Header("GameController")]
-    [SerializeField] private GameStateController gameStateController;
+    [SerializeField]
+    private GameStateController gameStateController;
 
     [Header("AI properties")]
-    [SerializeField] private BoxCollider movementBoundsArea;
-    [SerializeField] private NPCState currentState;
+    [SerializeField] 
+    private BoxCollider movementBoundsArea;
+    [SerializeField] 
+    private NPCState currentState;
 
     public bool isInfected;
 
-    [SerializeField] private float minTimeBeforeMove;
-    [SerializeField] private float maxTimeBeforeMove;
+    [SerializeField] 
+    private float minTimeBeforeMove;
+    [SerializeField] 
+    private float maxTimeBeforeMove;
     private NavMeshAgent agent;
     private Vector3 nextLocation;
     private GameObject targetToInfect;
@@ -35,7 +40,9 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
 
     [Header("AI Animation")]
     public Animator AIAnimator;
-
+    [Header("Game Objects")]
+    [SerializeField]
+    private GameObject bloodToSpawn;
 
     // Start is called before the first frame update
     void Start()
@@ -212,6 +219,9 @@ public class NPCController : MonoBehaviour, IPointerClickHandler
         currentState = NPCState.GettingAttacked;
         AIAnimator.SetInteger("AnimationState", 4);
         agent.SetDestination(transform.position);
+
+        GameObject temp = Instantiate(bloodToSpawn);
+        temp.transform.position = new Vector3(transform.position.x, 0.52f, transform.position.z);
 
         StartCoroutine(waitForGettingAttackedToPlay(2.6f));
     }

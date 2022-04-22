@@ -4336,7 +4336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f1e6809aecc4a469a521613a7164d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfNPCs: 5
+  numberOfNPCs: 10
   numberOfSecBeforeNextWave: 10
   gameObjectNPC: {fileID: 5106451830453444592, guid: 323cf88c23176174db6431e1e4ec5d64, type: 3}
   TimerUI: {fileID: 1526291116}
@@ -26396,7 +26396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d0f646c57e95246b48e4380ff13ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
   jumpForce: 0
   followTransform: {fileID: 0}
   aimSensativity: 0.5

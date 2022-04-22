@@ -140,6 +140,7 @@ MonoBehaviour:
   minTimeBeforeMove: 1
   maxTimeBeforeMove: 5
   AIAnimator: {fileID: 0}
+  bloodToSpawn: {fileID: 2229463117306530506, guid: 1b14fd056204be2479761b8c2d635927, type: 3}
 --- !u!82 &-2601936421700610725
 AudioSource:
   m_ObjectHideFlags: 0

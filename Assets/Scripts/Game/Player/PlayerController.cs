@@ -6,10 +6,14 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float speed;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private GameObject followTransform;
-    [SerializeField] private float aimSensativity = 1;
+    [SerializeField] 
+    private float speed;
+    [SerializeField] 
+    private float jumpForce;
+    [SerializeField] 
+    private GameObject followTransform;
+    [SerializeField] 
+    private float aimSensativity = 1;
 
 
 
