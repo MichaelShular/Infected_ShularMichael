@@ -1,0 +1,36 @@
+Models
+Snaps Prototype | Sci-Fi / Industrial
+by:Asset Store Originals
+https://assetstore.unity.com/packages/3d/environments/sci-fi/snaps-prototype-sci-fi-industrial-136759
+
+Meshtint Free Super Ward Pack
+by: Meshtint Studio
+https://assetstore.unity.com/packages/3d/environments/urban/meshtint-free-super-ward-pack-156125
+
+Mixamo characters: Olivia 
+https://www.mixamo.com/#/?page=1&query=doctor&type=Character
+
+UI
+Clean Settings UI
+by: Landan Lloyd
+https://assetstore.unity.com/packages/tools/gui/clean-settings-ui-65588
+
+
+Animations
+All 3-D model animations pull from 
+https://www.mixamo.com
+
+
+SFX
+hurt1.wav 
+by: thecheeseman
+https://freesound.org/people/thecheeseman/sounds/44428/
+
+BGM
+abandoned
+by: horseyfootage
+https://freesound.org/people/horseyfootage/sounds/275302/
+
+Soft suspense music
+by: NeoSpica
+https://freesound.org/people/NeoSpica/sounds/504616/
